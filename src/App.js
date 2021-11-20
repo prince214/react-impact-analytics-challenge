@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useMemo, useState, useEffect } from "react";
+import { COLUMNS } from "./componenets/columns.js";
+import Table from "./componenets/Table.js";
+import "./App.css";
 
 function App() {
+  const [state, setState] = useState([]);
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => state, [state]);
+
+  useEffect(() => {
+    async function getMockData() {
+      await fetch(
+        "https://s3-ap-southeast-1.amazonaws.com/he-public-data/reciped9d7b8c.json"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setState(data);
+        });
+    }
+    getMockData();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Table columns={columns} data={data} />
     </div>
   );
 }
