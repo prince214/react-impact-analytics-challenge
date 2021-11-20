@@ -26,8 +26,8 @@ export const COLUMNS = [
     Header: "Price",
     accessor: "price",
     Filter: ColumnFilter,
-    aggregate: "sum",
-    Aggregate: ({ value }) => `${Math.round(value * 100) / 100} (sum)`,
+    aggregate: 'sum',
+    Aggregated: ({ value }) => `${value} (sum)`,
   },
   {
     Header: "Description",
